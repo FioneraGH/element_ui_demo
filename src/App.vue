@@ -1,5 +1,56 @@
 <template>
   <div id="app">
+
+    <div>
+      <el-select filterable allow-create v-model="select2" placeholder="清选择">
+        <el-option v-for="item in options" :label="item.label" :value="item.value" :disabled="item.disabled">
+          <span style="float: left">{{item.label}}</span>
+          <span style="float: right; color: #8492a6; font-size: 12px">{{item.value}}</span>
+        </el-option>
+      </el-select>
+      <el-select multiple v-model="select3" placeholder="清选择">
+        <el-option v-for="item in options" :label="item.label" :value="item.value"></el-option>
+      </el-select>
+      <span>{{select2}}</span>
+    </div>
+
+    <div class="split-line"></div>
+
+    <el-input-number v-model="number1" step="2" min="1" max="10" @change="handleChanged"></el-input-number>
+
+    <div class="split-line"></div>
+
+    <div>
+      <span>选择 {{radio}}</span>
+      <el-radio v-model="radio" label="1">单选1</el-radio>
+      <el-radio v-model="radio" label="2">单选2</el-radio>
+      <el-radio v-model="radio" label="3" disabled>单选3</el-radio>
+    </div>
+    <el-radio-group v-model="radio2" @change="handleChanged">
+      <el-radio-button label="3">单选3</el-radio-button>
+      <el-radio-button label="5">单选5</el-radio-button>
+      <el-radio-button label="8">单选8</el-radio-button>
+    </el-radio-group>
+
+    <div class="split-line"></div>
+
+    <div>
+      {{checked?"Moustache风格选中":"Moustache风格取消"}}
+      <el-checkbox v-model="checked" checked>
+        <span v-if="checked">已选中</span>
+        <span v-else>未选中</span>
+      </el-checkbox>
+      <el-checkbox v-model="checked" disabled>禁用</el-checkbox>
+    </div>
+    <span>{{checked2}}</span>
+    <el-checkbox-group v-model="checked2" @change="handleChanged">
+      <el-checkbox label="1">复选1</el-checkbox>
+      <el-checkbox label="2">复选2</el-checkbox>
+      <el-checkbox label="3">复选3</el-checkbox>
+    </el-checkbox-group>
+
+    <div class="split-line"></div>
+
     <el-button @click="startHacking" icon="search">{{ msg }}</el-button>
     <el-button type="success" disabled="true">图标在右 <i class="el-icon-edit"></i></el-button>
     <el-button-group>
@@ -12,36 +63,11 @@
       <el-button type="primary" :loading="true">加载状态</el-button>
     </el-button-group>
 
-    <div>
-      <span>选择 {{radio}}</span>
-      <el-radio v-model="radio" label="1">单选1</el-radio>
-      <el-radio v-model="radio" label="2">单选2</el-radio>
-      <el-radio v-model="radio" label="3" disabled>单选3</el-radio>
-    </div>
-    <el-radio-group v-model="radio2" @change="radioGroupChanged">
-      <el-radio-button label="3">单选3</el-radio-button>
-      <el-radio-button label="5">单选5</el-radio-button>
-      <el-radio-button label="8">单选8</el-radio-button>
-    </el-radio-group>
-
-    <div>
-      {{checked?"Moustache风格选中":"Moustache风格取消"}}
-      <el-checkbox v-model="checked" checked>
-        <span v-if="checked">已选中</span>
-        <span v-else>未选中</span>
-      </el-checkbox>
-      <el-checkbox v-model="checked" disabled>禁用</el-checkbox>
-    </div>
-    <span>{{checked2}}</span>
-    <el-checkbox-group v-model="checked2" @change="radioGroupChanged">
-      <el-checkbox label="1">复选1</el-checkbox>
-      <el-checkbox label="2">复选2</el-checkbox>
-      <el-checkbox label="3">复选3</el-checkbox>
-    </el-checkbox-group>
+    <div class="split-line"></div>
 
     <el-input v-model="input" placeholder="请输入内容" icon="delete" @click="handleDeleteClick"></el-input>
     <el-input v-model="input" placeholder="请输入内容">
-      <el-select v-model="select" slot="prepend" placeholder="请选择">
+      <el-select clearable v-model="select" slot="prepend" placeholder="请选择">
         <el-option label="餐厅名" value="1"></el-option>
         <el-option label="订单号" value="2"></el-option>
         <el-option label="用户电话" value="3"></el-option>
@@ -50,6 +76,8 @@
     </el-input>
     <el-input type="textarea" :rows="3" v-model="input" placeholder="请输入内容" icon="delete" @click="handleDeleteClick"></el-input>
     <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" v-model="input" placeholder="请输入内容" icon="delete" @click="handleDeleteClick"></el-input>
+
+    <div class="split-line"></div>
 
     <el-row class="el-row" :gutter="20">
       <el-col :span="12">
@@ -88,11 +116,18 @@
 </template>
 
 <style>
+  .split-line {
+    width: 100%;
+    height: 2px;
+    background: blue;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
   .el-select {
     width: 110px;
   }
   .el-row {
-    margin:20px
+    margin: 20px;
   }
   .bg-purple-dark {
     background: #99a9bf;
@@ -119,7 +154,27 @@
         checked: true,
         checked2: ["2"],
         input: "",
-        select: ""
+        select: "",
+        select2: "",
+        select3: [],
+        options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶',
+          disabled: true
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
+        }],
+        number1: 1,
       }
     },
     methods: {
@@ -130,7 +185,7 @@
           duration: 2500
         })
       },
-      radioGroupChanged(value) {
+      handleChanged(value) {
         alert(value);
       },
       handleDeleteClick(ev) {
