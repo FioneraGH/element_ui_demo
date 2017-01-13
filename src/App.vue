@@ -1,11 +1,37 @@
 <template>
   <div id="app">
 
+    <el-rate v-model="rate" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" show-text text-color="#ff9900" texts="12345"></el-rate>
+
+    <div class="split-line"></div>
+
+    <div>
+      <el-time-select v-model="time1" :picker-options="{start:'08:30', end:'15:30', step:'00:10', minTime:'08:40'}" placeholder="选择时间"></el-time-select>
+      <el-time-picker v-model="time2" is-range :picker-options="{selectableRange: '18:30:00 - 20:30:00'}" placeholder="时间选择"></el-time-picker>
+      <el-date-picker v-model="date1" type="date" placeholder="选择日期"></el-date-picker>
+      <el-date-picker v-model="date1" type="datetime" placeholder="选择日期时间"></el-date-picker>
+      <el-date-picker v-model="date2" type="datetimerange" placeholder="日期时间选择"></el-date-picker>
+    </div>
+
+    <div class="split-line"></div>
+
+    <div>
+      <span>{{slider}}</span>
+      <el-slider v-model="slider" :step="5" show-stops show-input></el-slider>
+    </div>
+
+    <div class="split-line"></div>
+
+    <el-switch v-model="switch1" width="100" on-text="开启" off-text="关闭"></el-switch>
+    <el-switch v-model="switch1" on-color="green" off-color="red"></el-switch>
+
+    <div class="split-line"></div>
+
     <div>
       <el-select filterable allow-create v-model="select2" placeholder="清选择">
         <el-option v-for="item in options" :label="item.label" :value="item.value" :disabled="item.disabled">
-          <span style="float: left">{{item.label}}</span>
-          <span style="float: right; color: #8492a6; font-size: 12px">{{item.value}}</span>
+          <!--<span style="float: left">{{item.label}}</span>
+          <span style="float: right; color: #8492a6; font-size: 12px">{{item.value}}</span>-->
         </el-option>
       </el-select>
       <el-select multiple v-model="select3" placeholder="清选择">
@@ -152,10 +178,10 @@
         radio: 1,
         radio2: 3,
         checked: true,
-        checked2: ["2"],
-        input: "",
-        select: "",
-        select2: "",
+        checked2: ['2'],
+        input: '',
+        select: '',
+        select2: '',
         select3: [],
         options: [{
           value: '选项1',
@@ -175,6 +201,13 @@
           label: '北京烤鸭'
         }],
         number1: 1,
+        switch1: true,
+        slider: 1,
+        time1: '',
+        time2: new Date(2016, 9, 10, 18, 40),
+        date1: '',
+        date2: '',
+        rate: null,
       }
     },
     methods: {
