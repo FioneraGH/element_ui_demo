@@ -63,9 +63,9 @@ module.exports = (options = {}) => ({
     ]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'manifest']
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+        // names: ['vendor', 'manifest']
+    // }),
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     })
