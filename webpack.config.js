@@ -17,6 +17,11 @@ module.exports = (options = {}) => ({
     chunkFilename: '[id].js?[chunkhash]',
     publicPath: options.dev ? '/assets/' : publicPath
   },
+  resolve: {
+    alias: {
+      '~': resolve(__dirname, 'src')
+    }
+  },
   module: {
     rules: [{
         test: /\.vue$/,
@@ -63,18 +68,19 @@ module.exports = (options = {}) => ({
     ]
   },
   plugins: [
-    // new webpack.optimize.CommonsChunkPlugin({
-        // names: ['vendor', 'manifest']
-    // }),
     new HtmlWebpackPlugin({
       template: 'src/index.html'
     })
   ],
-  resolve: {
-    alias: {
-      '~': resolve(__dirname, 'src')
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
     }
   },
+  performance: {
+    hints: options.dev ? false : 'warning'
+  },
+  devtool: options.dev ? '#eval-source-map' : '#source-map',
   devServer: {
     host: '0.0.0.0',
     port: 8010,
@@ -90,9 +96,5 @@ module.exports = (options = {}) => ({
     historyApiFallback: {
       index: url.parse(options.dev ? '/assets/' : publicPath).pathname
     }
-  },
-  performance: {
-    hints: options.dev ? false : 'warning'
-  },
-  devtool: options.dev ? '#eval-source-map' : '#source-map'
+  }
 })
